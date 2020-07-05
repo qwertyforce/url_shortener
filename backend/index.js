@@ -32,7 +32,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 const cors_options={
-    "origin": "http://localhost:5000",
+    "origin": "http://localhost:3000",
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
     "credentials":true,
     "preflightContinue": false,
@@ -79,8 +79,11 @@ const signup=require('./routes/signup.js')
 const login=require('./routes/login.js')
 const change_password=require('./routes/change_password.js')
 const forgot_password=require('./routes/forgot_password.js')
-
 const activate_account_email=require('./routes/activate_account_email.js')
+
+
+const shorten_link=require('./routes/shorten_link.js')
+const process_shortened_link=require('./routes/process_shortened_link.js')
 
 
 
@@ -134,4 +137,6 @@ app.get('/logout', (req, res) => {
         });
     }
 })
+app.post('/shorten',shorten_link)
+app.get('/:link_id',process_shortened_link)
 
