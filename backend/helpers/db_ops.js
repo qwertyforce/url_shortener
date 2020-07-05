@@ -91,8 +91,63 @@ async function generate_id() {
     return id;
 }
 
+/////////////////////////////////////////////////LINK OPS
+async function find_link_by_id(id) {
+    let link = findDocuments("links", {
+        short_id: id
+    })
+    return link
+}
+async function find_all_links_by_user_id(user_id) {
+    if(user_id){
+        let links = findDocuments("links", {
+            author_id: user_id
+        })
+        return links
+    }
+}
 
+async function generate_link_id() {
+    const id = new Promise((resolve, reject) => {
+        crypto.randomBytes(16, async function(ex, buffer) {
+            if (ex) {
+                reject("error");
+            }
+            let id = buffer.toString("base64").replace(/\/|=|[+]/g, '')
+            let links = await find_link_by_id(id) //check if id exists
+            if (links.length === 0) {
+                resolve(id);
+            } else {
+                let id_1 = await generate_link_id()
+                resolve(id_1)
+            }
+        });
+    });
+    return id;
+}
 
+async function add_link(user_id,link) {
+    const short_id=await generate_link_id()
+    insertDocuments("links", [{
+        created_at: new Date(),
+        original_link:link,
+        short_id: short_id,
+        views:0,
+        author_id: user_id,
+    }])
+    return short_id
+}
+async function remove_link(link_short_id) {
+    return removeDocument("links",{short_id: link_short_id})
+}
+
+async function increase_view_count(link_short_id) {
+    const collection = client.db(db_main).collection("links");
+    let result= collection.updateOne({short_id: link_short_id}, { $inc: {"views":1} })
+    return result
+}
+
+/////////////////////////////////////////////////////////
 
 
 
@@ -125,29 +180,6 @@ async function find_user_id_by_password_recovery_token(token) {
 //////////////////////////////////////////
 
 //////////////////////////////////////////ACTIVATED USER
-
-async function add_link(user_id,link) {
-    return addToArrayInDocument("users",{id: user_id},{links:link})
-}
-async function remove_link(user_id,link) {
-    return removeFromArrayInDocument("users",{id: user_id},{links:link})
-}
-
-async function increase_view_count(user_id,link) {
-    const collection = client.db(db_main).collection("users");
-    let result= collection.updateOne(selector, { $inc: {"link.$.views":1} })
-    return result
-}
-
-async function update_user_general_notifications_by_id(id,general_notifications) {
-    updateDocument("users", {id: id},{general_notifications:general_notifications})
-}
-async function update_user_webpush_subscription_by_id(id,subscription) {
-    updateDocument("users", {id: id},{subscription:subscription})
-}
-
-
-
 
 async function find_user_by_email(email) {
     let user = findDocuments("users", {
@@ -183,7 +215,7 @@ async function create_new_user_activated(email, pass) {
 
 
 async function create_new_user_activated_github(oauth_id) {
-    var id=await generate_id()
+    c
     insertDocuments("users", [{
         oauth_id: oauth_id,
         id: id,
@@ -233,6 +265,13 @@ async function create_new_user_not_activated(email, pass, token) {
 /////////////////////////////////////////////////////////
 
 module.exports =  {
+    link_ops:{
+        add_link,
+        remove_link,
+        find_link_by_id,
+        increase_view_count,
+        find_all_links_by_user_id
+    },
     password_recovery:{
         update_user_password_by_id,
         delete_password_recovery_token,
