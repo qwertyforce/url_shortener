@@ -49,21 +49,21 @@ function App_Bar (props) {
   const [helperText, setHelperText] = React.useState('');
   const [isButtonDisabled, setIsButtonDisabled] = React.useState(true);
   const short_link = () => {
-    let data={url:url}
-    axios("http://localhost/short", {
+    let data={link:url}
+    axios("http://localhost/shorten", {
       method: "post",
       data: data,
       withCredentials: true
     }).then((resp)=>{
       setError(false);
-      setShortenedurl(resp.data.url)
-      setHelperText(resp.data.message);
-      console.log(resp)
+      console.log(resp.data.link_id)
+      setShortenedurl(`http://localhost:80/${resp.data.link_id}`)
+      setUrl("")
     }).catch((err)=>{
       console.log(err)
       setError(true);
       if(err.response){
-        setHelperText(err.response.data.message)
+        setHelperText("Something went wrong")
         console.log(err.response)
       }else{
         setHelperText("Unknown error")
@@ -98,6 +98,7 @@ function App_Bar (props) {
                 placeholder="https://google.com"
                 margin="normal"
                 variant="outlined"
+                value={url}
                 helperText={helperText}
                 onChange={(e)=>setUrl(e.target.value)}
                 onKeyPress={(e)=>handleKeyPress(e)}
@@ -115,7 +116,7 @@ function App_Bar (props) {
       <div className={classes.card_container}>
       {(shortened_url!=='')?(<Card className={classes.card} >
           <CardContent className={classes.card_content}>
-            {{shortened_url}}
+            {shortened_url}
             </CardContent>
         </Card>):null}
       

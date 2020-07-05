@@ -36,10 +36,9 @@ function App_Bar (props) {
           <TableHead>
             <TableRow>
               <TableCell>Shortened url</TableCell>
-              <TableCell align="right">Original url</TableCell>
-              <TableCell align="right">Views</TableCell>
-              {/* <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-              <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
+              <TableCell align="center">Original url</TableCell>
+              <TableCell align="center">Views</TableCell>
+
             </TableRow>
           </TableHead>
           <TableBody>
@@ -48,10 +47,8 @@ function App_Bar (props) {
                 <TableCell component="th" scope="row">
                   {row.name}
                 </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                {/* <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell> */}
+                <TableCell align="center">{row.calories}</TableCell>
+                <TableCell align="center">{row.fat}</TableCell>
               </TableRow>
             ))}
           </TableBody>

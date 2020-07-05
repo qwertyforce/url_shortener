@@ -12,6 +12,7 @@ import Settings from "./Settings";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 import Home from "./Home";
+import NotFound from "./NotFound";
 import Dashboard from "./Dashboard";
 import { set_email, set_mail_notifications, set_general_notifications } from './redux_slices/userDataSlice';
 import {useDispatch } from 'react-redux';
@@ -113,6 +114,9 @@ function App2(){
                  </Route>
                  <Route exact path="/dashboard">
                    <Dashboard />
+                 </Route>
+                 <Route exact path="/not_found">
+                   <NotFound/>
                  </Route>
                  <Route path="/login">
                    <LoginForm/>
