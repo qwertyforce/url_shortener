@@ -1,5 +1,5 @@
 const db_ops = require('./../helpers/db_ops.js')
-async function profile (req,res){
+async function get_user_links (req,res){
 	if (req.session.authed !== undefined) {
         const user_id=req.session.user_id;
         const links = await db_ops.link_ops.find_all_links_by_user_id(user_id);
@@ -8,14 +8,11 @@ async function profile (req,res){
                 delete(links[i]._id)
                 delete(links[i].author_id)
             }
-            const data={
-                links:links
-            }
-            res.json({data:data})
+           return  res.json({links:links})
         }
-    } else {
-        res.json({data:null})
+        return  res.json({links:[]})
     }
+    res.json({links:null})
 }
 
-module.exports = profile;
+module.exports = get_user_links;

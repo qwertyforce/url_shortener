@@ -68,7 +68,7 @@ app.listen(port, () => { //Uncomment if you want to use http
 
 // console.log(`Server is listening on port ${port}`);
 
-const user_data=require('./routes/user_data.js')
+const get_user_links=require('./routes/get_user_links.js')
 const google_oauth_redirect=require('./routes/google_oauth_redirect.js')
 const github_oauth_redirect=require('./routes/github_oauth_redirect.js')
 
@@ -88,7 +88,7 @@ const process_shortened_link=require('./routes/process_shortened_link.js')
 
 
 
-app.get('/user_data',user_data)
+app.get('/get_user_links',get_user_links)
 
 app.get('/auth/google',google_oauth_redirect)
 app.get('/auth/github',github_oauth_redirect)
