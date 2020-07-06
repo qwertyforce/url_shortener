@@ -1,6 +1,5 @@
 import React from "react";
-import {useSelector} from 'react-redux';
-import {selectEmail} from './redux_slices/userDataSlice';
+import axios from 'axios';
 import {makeStyles} from "@material-ui/core/styles";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -18,17 +17,23 @@ const useStyles = makeStyles(theme => ({
 
 function App_Bar (props) {
   const classes = useStyles();
-  function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-  }
+  React.useEffect(() => {
+    axios("http://localhost/get_user_links", {
+      method: "get",
+      withCredentials: true
+    }).then((resp)=>{
+      setLinks(resp.data.links)
+      console.log(resp)
+    }).catch((err)=>{
+      if(err.response){
+        console.log(err.response)
+      }
+    })
+  }, []);
+
   
-  const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-  ];
+  const [links, setLinks] = React.useState(false);
+
   function afs(){
     return (
       <TableContainer component={Paper}>
@@ -42,13 +47,13 @@ function App_Bar (props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.name}>
+            {links.map((link) => (
+              <TableRow key={link.short_id}>
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  {`http://localhost/${link.short_id}`}
                 </TableCell>
-                <TableCell align="center">{row.calories}</TableCell>
-                <TableCell align="center">{row.fat}</TableCell>
+                <TableCell align="center">{link.original_link}</TableCell>
+                <TableCell align="center">{link.views}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -56,10 +61,9 @@ function App_Bar (props) {
       </TableContainer>
     );
   }  
-  const Email = useSelector(selectEmail);
   return (
     <div className={classes.container}>
-      {(Email!==null)?<h2>please,<a href="/login">log in</a></h2>:
+      {(!links)?<h2>please,<a href="/login">log in</a></h2>:
       afs()}
      
     </div>
