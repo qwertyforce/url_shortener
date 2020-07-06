@@ -28,7 +28,7 @@ async function google_oauth_callback(req, res) {
             req.session.user_id = users[0].id;
         }
         req.session.authed = true;
-        res.redirect("/profile")
+        res.redirect("http://localhost:3000/")
     } catch (e) {
         console.log(e)
     }
