@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { makeStyles } from "@material-ui/core/styles";
@@ -14,8 +13,6 @@ import SignUpForm from "./SignUpForm";
 import Home from "./Home";
 import NotFound from "./NotFound";
 import Dashboard from "./Dashboard";
-import { set_email, set_mail_notifications, set_general_notifications } from './redux_slices/userDataSlice';
-import {useDispatch } from 'react-redux';
 
 import './App.css';
 const drawerWidth = 240;
@@ -42,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 function App2(){
   const classes = useStyles();
-  const dispatch = useDispatch();
   //Theme color/////////////////////////////////////////////////////////////
   const [DynamicTheme, setTheme] = React.useState(createMuiTheme(theme));
   const [theme_color, set_theme_color] = React.useState("light");
@@ -60,40 +56,20 @@ function App2(){
   };
   ///////////////////////////////////////////////////////////////////////////
 
-  ////On start//////////////////////////////////////////////////////////////
-  React.useEffect(() => {
-    navigator.serviceWorker.onmessage = function (e) {
-      console.log('e.data', e.data);
-      dispatch(set_general_notifications(e.data.general_notifications))
-      dispatch(set_mail_notifications(e.data.mail_notifications))
-  };
-    axios("http://localhost/profile", {
-      method: "get",
-      withCredentials: true
-    }).then((resp)=>{
-     let user_data=resp.data.data;
-     if(user_data!==null){
-      dispatch(set_email(user_data.email))
-      dispatch(set_general_notifications(user_data.general_notifications))
-      dispatch(set_mail_notifications(user_data.mail_notifications))
-     }
-      console.log(resp)
-    }).catch((err)=>{
-      if(err.response){
-        console.log(err.response)
-      }
-    })
+    ////On start//////////////////////////////////////////////////////////////
+    React.useEffect(() => {
+      let theme_color_local = localStorage.getItem("theme_color");
+      if (theme_color_local) {
+         set_theme_color(theme_color_local)
+      }else{
+        localStorage.setItem("theme_color", theme_color);
+       }
+      if(theme_color_local==="dark"){
+        handleChangeTheme()
+       }
+    }, []);
+    ///////////////////////////////////////////////////////////////////////////
 
-    let theme_color_local = localStorage.getItem("theme_color");
-    if (theme_color_local) {
-       set_theme_color(theme_color_local)
-    }else{
-      localStorage.setItem("theme_color", theme_color);
-     }
-    if(theme_color_local==="dark"){
-      handleChangeTheme()
-     }
-  }, []);
   ///////////////////////////////////////////////////////////////////////////
   const DrawerProps={
     DrawerOpen:DrawerOpen,

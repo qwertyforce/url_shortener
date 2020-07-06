@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Grid from "@material-ui/core/Grid";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import { faGoogle, faGithub } from "@fortawesome/free-brands-svg-icons";
+import { useHistory } from "react-router-dom";
 const useStyles = makeStyles(theme => ({
       container: {
         display: 'flex',
@@ -35,6 +36,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function LoginForm(props) {
+ const history = useHistory();
  const classes = useStyles();
  const [email, setEmail] = React.useState('');
  const [password, setPassword] = React.useState('');
@@ -60,6 +62,7 @@ function LoginForm(props) {
     }).then((resp)=>{
       setError(false);
       setHelperText('Successful');
+      history.push("/");
       console.log(resp)
     }).catch((err)=>{
       setError(true);
@@ -145,7 +148,7 @@ function LoginForm(props) {
                   variant="contained"
                   color="secondary"
                   onClick={props.handleSync}
-                  href="http://localhost:8080/auth/google"
+                  href="http://localhost:80/auth/google"
                   startIcon={
                     <SvgIcon>
                       <FontAwesomeIcon icon={faGoogle} size="lg" />
@@ -159,7 +162,7 @@ function LoginForm(props) {
                 <Button
                   variant="contained"
                   onClick={props.handleSync}
-                  href="http://localhost:8080/auth/github"
+                  href="http://localhost:80/auth/github"
                   startIcon={
                     <SvgIcon>
                       <FontAwesomeIcon icon={faGithub} size="lg" />

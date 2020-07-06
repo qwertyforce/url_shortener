@@ -9,19 +9,21 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
+import LinkIcon from '@material-ui/icons/Link';
 import SettingsApplicationsOutlinedIcon from '@material-ui/icons/SettingsApplicationsOutlined';
 import Drawer from '@material-ui/core/Drawer';
 import theme from "./../theme";
 import {Link} from "react-router-dom";
+
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
   },
-  drawerPaper: {
-    width: drawerWidth,
-  },
+  // drawerPaper: {
+  //   width: drawerWidth,
+  // },
   drawerHeader: {
     display: 'flex',
     alignItems: 'center',
@@ -42,9 +44,6 @@ function AppDrawer (props) {
         variant="persistent"
         anchor="left"
         open={props.open}
-        classes={{
-          drawerPaper: classes.drawerPaper,
-        }}
       >
         <div className={classes.drawerHeader}>
           <h1>Sample Text</h1>
@@ -54,6 +53,10 @@ function AppDrawer (props) {
         </div>
         <Divider />
         <List>
+        <ListItem button component={Link} to="/"  >
+          <ListItemIcon><LinkIcon /></ListItemIcon>
+          <ListItemText>Shorten link</ListItemText>
+        </ListItem>
         <ListItem button component={Link} to="/dashboard"  >
           <ListItemIcon><EqualizerIcon /></ListItemIcon>
           <ListItemText>Links statistics</ListItemText>
