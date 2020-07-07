@@ -46,7 +46,7 @@ function AppDrawer (props) {
         open={props.open}
       >
         <div className={classes.drawerHeader}>
-          <h1>Sample Text</h1>
+          <h1>Url shortener</h1>
           <IconButton onClick={props.handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>

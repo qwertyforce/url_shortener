@@ -133,7 +133,7 @@ app.get('/logout', (req, res) => {
             if (err) {
                 console.log(err)
             }
-            res.redirect('back')
+            res.redirect('http://localhost:3000/dashboard')
         });
     }
 })
