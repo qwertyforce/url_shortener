@@ -4,13 +4,13 @@ const crypto_ops = require('./../helpers/crypto_ops.js')
 async function change_password(req, res) {
     if (req.recaptcha.error) {
         return res.status(403).json({
-            message: ["Captcha error"]
+            message: "Captcha error"
         });
     }
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(422).json({
-            message: errors.array()
+            message: "password validation error"
         });
     }
     const MESSAGE_FAIL = "Your link is expired or wrong";
@@ -25,10 +25,12 @@ async function change_password(req, res) {
             let hashed_pass = await crypto_ops.hash_password(password);
             db_ops.password_recovery.update_user_password_by_id(user_id, hashed_pass)
             db_ops.password_recovery.delete_password_recovery_token(token)
-            return res.redirect("http://localhost/login")
+            return res.json({
+                message:MESSAGE_SUCCESS
+            })
         }
     }
-    res.json({
+    res.status(403).json({
         message: MESSAGE_FAIL
     })
 }
