@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
       container: {
         display: 'flex',
         flexWrap: 'wrap',
-        width: 400,
+        justifyContent:"center",
         margin: `${theme.spacing(0)} auto`
       },
       loginBtn: {
@@ -117,6 +117,9 @@ function LoginForm(props) {
                 onKeyPress={(e)=>handleKeyPress(e)}
               />
               <Box display="flex" justifyContent="flex-end">
+              <Button color="primary" component={RouterLink} to="/forgot_pw">
+               Forgot password
+             </Button>
               <Button color="primary" component={RouterLink} to="/signup">
                Sign up
              </Button>

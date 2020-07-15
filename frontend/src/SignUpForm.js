@@ -12,7 +12,8 @@ const useStyles = makeStyles(theme => ({
       container: {
         display: 'flex',
         flexWrap: 'wrap',
-        width: 400,
+        justifyContent:"center",
+        maxWidth:400,
         margin: `${theme.spacing(0)} auto`
       },
       loginBtn: {
@@ -35,8 +36,7 @@ function LoginForm(props) {
  const [isButtonDisabled, setIsButtonDisabled] = React.useState(true);
  const [helperText, setHelperText] = React.useState('');
  const [error, setError] = React.useState(false);
- function validateEmail(email) 
- {
+ function validateEmail(email) {
      var re = /\S+@\S+\.\S+/;
      return re.test(email);
  }
