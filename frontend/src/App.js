@@ -13,6 +13,8 @@ import SignUpForm from "./SignUpForm";
 import Home from "./Home";
 import NotFound from "./NotFound";
 import Dashboard from "./Dashboard";
+import ForgotPassword from "./ForgotPassword";
+import ChangePassword from "./ChangePassword";
 
 import './App.css';
 const drawerWidth = 240;
@@ -91,6 +93,10 @@ function App2(){
                  <Route exact path="/dashboard">
                    <Dashboard />
                  </Route>
+                 <Route exact path="/forgot_pw">
+                   <ForgotPassword />
+                 </Route>
+                 <Route exact path="/change_pw/:token" component={ChangePassword} />
                  <Route exact path="/not_found">
                    <NotFound/>
                  </Route>
