@@ -6,6 +6,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
+import config from "./config/config"
 
 const useStyles = makeStyles(theme => ({
       container: {
@@ -48,7 +49,7 @@ function ForgotPassword(props) {
 
   const handleFP = (token) => {
     let data={email: email,'g-recaptcha-response': token}
-    axios("http://localhost/forgot_pw", {
+    axios(`${config.domain}/forgot_pw`, {
       method: "post",
       data: data,
       withCredentials: true
@@ -70,7 +71,7 @@ function ForgotPassword(props) {
   const _handleFP = () => {
     /*global grecaptcha*/ // defined in public/index.html
     grecaptcha.ready(function() {
-      grecaptcha.execute('6LcqV9QUAAAAAEybBVr0FWnUnFQmOVxGoQ_Muhtb', {action: 'login'}).then(function(token) {
+      grecaptcha.execute(config.recaptcha_site_key, {action: 'login'}).then(function(token) {
         handleFP(token)
       });
       })

@@ -13,6 +13,8 @@ import Grid from "@material-ui/core/Grid";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import { faGoogle, faGithub } from "@fortawesome/free-brands-svg-icons";
 import { useHistory } from "react-router-dom";
+import config from "./config/config"
+
 const useStyles = makeStyles(theme => ({
       container: {
         display: 'flex',
@@ -55,7 +57,7 @@ function LoginForm(props) {
 
   const handleLogin = (token) => {
     let login_data={email: email,password: password,'g-recaptcha-response': token}
-    axios("http://localhost/login", {
+    axios(`${config.domain}/login`, {
       method: "post",
       data: login_data,
       withCredentials: true
@@ -77,7 +79,7 @@ function LoginForm(props) {
   const _handleLogin = () => {
     /*global grecaptcha*/ // defined in public/index.html
     grecaptcha.ready(function() {
-      grecaptcha.execute('6LcqV9QUAAAAAEybBVr0FWnUnFQmOVxGoQ_Muhtb', {action: 'login'}).then(function(token) {
+      grecaptcha.execute(config.recaptcha_site_key, {action: 'login'}).then(function(token) {
         handleLogin(token)
       });
       })
@@ -151,7 +153,7 @@ function LoginForm(props) {
                   variant="contained"
                   color="secondary"
                   onClick={props.handleSync}
-                  href="http://localhost:80/auth/google"
+                  href={`${config.domain}/auth/google`}
                   startIcon={
                     <SvgIcon>
                       <FontAwesomeIcon icon={faGoogle} size="lg" />
@@ -165,7 +167,7 @@ function LoginForm(props) {
                 <Button
                   variant="contained"
                   onClick={props.handleSync}
-                  href="http://localhost:80/auth/github"
+                  href={`${config.domain}/auth/github`}
                   startIcon={
                     <SvgIcon>
                       <FontAwesomeIcon icon={faGithub} size="lg" />

@@ -8,7 +8,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-
+import config from "./config/config"
 const useStyles = makeStyles(theme => ({
   container: {
     marginTop:50
@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
 function App_Bar (props) {
   const classes = useStyles();
   React.useEffect(() => {
-    axios("http://localhost/get_user_links", {
+    axios(`${config.domain}/get_user_links`, {
       method: "get",
       withCredentials: true
     }).then((resp)=>{
@@ -50,7 +50,7 @@ function App_Bar (props) {
             {links.map((link) => (
               <TableRow key={link.short_id}>
                 <TableCell component="th" scope="row">
-                  {`http://localhost/${link.short_id}`}
+                  {`${config.domain}/${link.short_id}`}
                 </TableCell>
                 <TableCell align="center">{link.original_link}</TableCell>
                 <TableCell align="center">{link.views}</TableCell>

@@ -6,8 +6,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
-import Box from '@material-ui/core/Box';
-import { Link as RouterLink } from 'react-router-dom';
+import config from "./config/config"
 
 import { useHistory } from "react-router-dom";
 const useStyles = makeStyles(theme => ({
@@ -50,7 +49,7 @@ function ChangePassword(props) {
 
   const handleChangePassword = (captcha_token) => {
     let data={token:token, password:password,'g-recaptcha-response': captcha_token}
-    axios("http://localhost/change_pw", {
+    axios(`${config.domain}/change_pw`, {
       method: "post",
       data: data,
       withCredentials: true
@@ -73,7 +72,7 @@ function ChangePassword(props) {
     /*global grecaptcha*/ // defined in public/index.html
     if (password === password2) {
       grecaptcha.ready(function () {
-        grecaptcha.execute('6LcqV9QUAAAAAEybBVr0FWnUnFQmOVxGoQ_Muhtb', { action: 'login' }).then(function (token) {
+        grecaptcha.execute(config.recaptcha_site_key, { action: 'login' }).then(function (token) {
           handleChangePassword(token)
         });
       })

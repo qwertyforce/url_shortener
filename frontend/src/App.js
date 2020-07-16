@@ -15,8 +15,8 @@ import NotFound from "./NotFound";
 import Dashboard from "./Dashboard";
 import ForgotPassword from "./ForgotPassword";
 import ChangePassword from "./ChangePassword";
-
 import './App.css';
+
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {

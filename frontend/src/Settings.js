@@ -1,6 +1,7 @@
 import React from "react";
 import InvertColorsIcon from "@material-ui/icons/InvertColors";
 import Button from "@material-ui/core/Button";
+import config from "./config/config"
 function Settings(props) {
   return (
     <div>
@@ -12,7 +13,7 @@ function Settings(props) {
 
       </div>
       <div style={{marginTop:25}}>
-        <Button variant="contained" href="http://localhost/logout" color="secondary">
+        <Button variant="contained" href={`${config.domain}/logout`} color="secondary">
           Logout
         </Button>
       </div>

@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import {makeStyles} from "@material-ui/core/styles";
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-
+import config from "./config/config"
 function isValidURL(url){
   var RegExp = /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z0-9\u00a1-\uffff][a-z0-9\u00a1-\uffff_-]{0,62})?[a-z0-9\u00a1-\uffff]\.)+(?:[a-z\u00a1-\uffff]{2,}\.?))(?::\d{2,5})?(?:[/?#]\S*)?$/i
 
@@ -50,14 +50,14 @@ function App_Bar (props) {
   const [isButtonDisabled, setIsButtonDisabled] = React.useState(true);
   const short_link = () => {
     let data={link:url}
-    axios("http://localhost/shorten", {
+    axios(`${config.domain}/shorten`, {
       method: "post",
       data: data,
       withCredentials: true
     }).then((resp)=>{
       setError(false);
       console.log(resp.data.link_id)
-      setShortenedurl(`http://localhost:80/${resp.data.link_id}`)
+      setShortenedurl(`${config.domain}/${resp.data.link_id}`)
       setUrl("")
     }).catch((err)=>{
       console.log(err)
