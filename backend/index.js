@@ -51,7 +51,7 @@ app.use(session({
         sameSite: 'lax'
     },
     store: new MongoStore({
-        url: 'mongodb://localhost/url_shortener',
+        url: 'mongodb://localhost/url_shortener?authSource=admin',
         ttl: 14 * 24 * 60 * 60
     }) // = 14 days. Default
 }))
