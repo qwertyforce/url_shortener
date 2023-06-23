@@ -5,7 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.21.2",
-    "bcrypt": "^5.0.0",
+    "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
     "connect-mongo": "^3.2.0",
     "cookie-parser": "^1.4.5",
@@ -15,7 +15,7 @@
     "express-recaptcha": "^5.0.2",
     "express-session": "^1.17.1",
     "express-validator": "^6.6.0",
-    "mongodb": "^3.5.9",
+    "mongodb": "^3.7.4",
     "nodemailer": "^6.6.1"
   }
 }
